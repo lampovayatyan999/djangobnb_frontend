@@ -5,44 +5,44 @@ import { UserType } from "../page";
 import apiService from "@/app/services/apiService";
 
 export type MessageType = {
-    id: string;
-    name: string;
-    body: string;
-    conversationId: string;
-    sent_to: UserType;
-    created_by: UserType;  
+  id: string;
+  name: string;
+  body: string;
+  conversationId: string;
+  sent_to: UserType;
+  created_by: UserType;  
 };
 
 interface PageProps {
-    params: {
-        id: string;
-    };
+  params: {
+    id: string;
+  };
 }
 
 const ConversationPage = async ({ params }: PageProps) => {
-    const userId = await getUserId();
-    const token = await getAccessToken();
-    
-    if (!userId || !token) {
-        return (
-            <main className="max-w-[1500px] mx-auto px-6 py-12">
-                <p>You need to be authenticated...</p>
-            </main>
-        );
-    }
+  const userId = await getUserId();
+  const token = await getAccessToken();
 
-    const conversation = await apiService.get(`/api/chat/${params.id}/`);
-
-    return ( 
-        <main className="max-w-[1500px] mx-auto px-6 pb-6">
-            <ConversationDetail
-                token={token}
-                userId={userId}
-                messages={conversation.messages}
-                conversation={conversation.conversation}
-            />
-        </main>
+  if (!userId || !token) {
+    return (
+      <main className="max-w-[1500px] max-auto px-6 py-12">
+        <p>You need to be authenticated...</p>
+      </main>
     );
+  }
+
+  const conversation = await apiService.get(`/api/chat/${params.id}/`);
+
+  return ( 
+    <main className="max-w-[1500px] mx-auto px-6 pb-6">
+      <ConversationDetail
+        token={token}
+        userId={userId}
+        messages={conversation.messages}
+        conversation={conversation.conversation}
+      />
+    </main>
+  );
 };
 
 export default ConversationPage;
