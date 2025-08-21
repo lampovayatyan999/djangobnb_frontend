@@ -1,7 +1,4 @@
-// @ts-expect-error Next.js 15 type mismatch
 // @ts-nocheck
-
-
 import { getUserId, getAccessToken } from "@/app/lib/actions";
 import React from "react";
 import ConversationDetail from "@/app/components/inbox/ConversationDetail";
@@ -17,14 +14,7 @@ export type MessageType = {
   created_by: UserType;
 };
 
-// ✅ убираем Next.js PageProps, делаем свой
-type ConversationPageProps = {
-  params: {
-    id: string;
-  };
-};
-
-const ConversationPage = async ({ params }: ConversationPageProps) => {
+const ConversationPage = async ({ params }: any) => { // <--- используем any
   const userId = await getUserId();
   const token = await getAccessToken();
 
