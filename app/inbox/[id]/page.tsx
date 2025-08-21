@@ -10,22 +10,23 @@ export type MessageType = {
   body: string;
   conversationId: string;
   sent_to: UserType;
-  created_by: UserType;  
+  created_by: UserType;
 };
 
-interface PageProps {
+// ✅ убираем Next.js PageProps, делаем свой
+type ConversationPageProps = {
   params: {
     id: string;
   };
-}
+};
 
-const ConversationPage = async ({ params }: PageProps) => {
+const ConversationPage = async ({ params }: ConversationPageProps) => {
   const userId = await getUserId();
   const token = await getAccessToken();
 
   if (!userId || !token) {
     return (
-      <main className="max-w-[1500px] max-auto px-6 py-12">
+      <main className="max-w-[1500px] mx-auto px-6 py-12">
         <p>You need to be authenticated...</p>
       </main>
     );
@@ -33,7 +34,7 @@ const ConversationPage = async ({ params }: PageProps) => {
 
   const conversation = await apiService.get(`/api/chat/${params.id}/`);
 
-  return ( 
+  return (
     <main className="max-w-[1500px] mx-auto px-6 pb-6">
       <ConversationDetail
         token={token}
