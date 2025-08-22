@@ -20,7 +20,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
     conversation,
     messages
 }) => {
-    const messageDiv = useRef(null);
+    const messageDiv = useRef<HTMLDivElement | null>(null);
     const [newMessage, setNewMessage] = useState('');
     const myUser = conversation.users?.find((user) => user.id == userId)
     const otherUser = conversation.users?.find((user) => user.id != userId)
@@ -75,7 +75,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
 
     const scrollToBottom = () => {
         if(messageDiv.current) {
-            messageDiv.current.scrollTop = messageDiv.current.scrollheigth;
+            messageDiv.current.scrollTop = messageDiv.current.scrollHeight; 
         }
     }
 
