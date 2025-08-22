@@ -1,5 +1,3 @@
-
-
 import ReservationSidebar from "@/app/components/properties/ReservationSidebar";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,13 +6,13 @@ import apiService from "@/app/services/apiService";
 import { getUserId } from "@/app/lib/actions";
 
 interface PropertyDetailPageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;   // ✅ теперь params — это промис
 }
 
 const PropertyDetailPage = async ({ params }: PropertyDetailPageProps) => {
-  const property = await apiService.get(`/api/properties/${params.id}`);
+  const { id } = await params;   // ✅ деструктурим после await
+
+  const property = await apiService.get(`/api/properties/${id}`);
   const userId = await getUserId();
 
   return (

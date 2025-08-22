@@ -1,13 +1,16 @@
-
-
 import Image from "next/image";
 import ContactButton from "@/app/components/ContactButton";
 import PropertyList from "@/app/components/properties/PropertyList";
 import apiService from "@/app/services/apiService";
 import { getUserId } from "@/app/lib/actions";
 
-const LandlordDetailPage = async ({ params }: any) => {
-    const landlord = await apiService.get(`/api/auth/${params.id}`)
+interface LandlordPageProps {
+  params: Promise<{ id: string }>;  // ✅ Next.js 15: params теперь промис
+}
+
+const LandlordDetailPage = async ({ params }: LandlordPageProps) => {
+    const { id } = await params;
+    const landlord = await apiService.get(`/api/auth/${id}`);
     const userId = await getUserId();
 
     return ( 
@@ -26,10 +29,10 @@ const LandlordDetailPage = async ({ params }: any) => {
 
                         <h1 className="mt-6 text-2xl">{landlord.name}</h1>
 
-                        {userId != params.id && (
+                        {userId != id && (   
                             <ContactButton 
                                 userId={userId}
-                                landlordId={params.id}
+                                landlordId={id}
                             />
                         )}
                     </div>
@@ -37,7 +40,7 @@ const LandlordDetailPage = async ({ params }: any) => {
 
                 <div className="col-span-1 md:col-span-3 pl-0 md:pl-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <PropertyList landlord_id={params.id} />
+                        <PropertyList landlord_id={id} />
                     </div>
                 </div>
             </div>
