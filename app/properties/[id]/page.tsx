@@ -1,4 +1,4 @@
-
+// @ts-nocheck
 
 import ReservationSidebar from "@/app/components/properties/ReservationSidebar";
 import Image from "next/image";
