@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 
 import Image from "next/image";
 import ContactButton from "@/app/components/ContactButton";
@@ -6,7 +6,7 @@ import PropertyList from "@/app/components/properties/PropertyList";
 import apiService from "@/app/services/apiService";
 import { getUserId } from "@/app/lib/actions";
 
-const LandlordDetailPage = async ({ params }: {params: { id: string}}) => {
+const LandlordDetailPage = async ({ params }: any) => {
     const landlord = await apiService.get(`/api/auth/${params.id}`)
     const userId = await getUserId();
 
@@ -24,7 +24,6 @@ const LandlordDetailPage = async ({ params }: {params: { id: string}}) => {
                             />
                         </div>
 
-
                         <h1 className="mt-6 text-2xl">{landlord.name}</h1>
 
                         {userId != params.id && (
@@ -37,10 +36,8 @@ const LandlordDetailPage = async ({ params }: {params: { id: string}}) => {
                 </aside>
 
                 <div className="col-span-1 md:col-span-3 pl-0 md:pl-6">
-                    <div className="     grid grid-cols-1 md:grid-cols-3 5 gap-6">
-                        <PropertyList
-                            landlord_id={params.id}
-                        />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <PropertyList landlord_id={params.id} />
                     </div>
                 </div>
             </div>
